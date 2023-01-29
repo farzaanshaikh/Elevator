@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import MaxValueValidator, MinValueValidator
 
 from elevator_manager.constants import (
+    BUILDING_NAME_MAX_LEN,
     BUILDING_MAX_FLOORS,
     BUILDING_MIN_FLOORS,
     BUILDING_MAX_ELEVATORS,
@@ -16,7 +17,7 @@ from elevator_manager.constants import (
 
 
 class Building(models.Model):
-    name = models.CharField(max_length=128)
+    name = models.CharField(max_length=BUILDING_NAME_MAX_LEN)
     floors = models.PositiveSmallIntegerField(default=5, validators=[MinValueValidator(BUILDING_MIN_FLOORS), MaxValueValidator(BUILDING_MAX_FLOORS)])
     number_of_elevators = models.PositiveSmallIntegerField(default=3, validators=[MinValueValidator(BUILDING_MIN_ELEVATORS), MaxValueValidator(BUILDING_MAX_ELEVATORS)])
 
@@ -39,14 +40,14 @@ class Elevator(models.Model):
     movement_status = models.PositiveSmallIntegerField(default=ELEVATOR_STOPPED, choices=MOVEMENT_CHOICES)
     is_operational = models.BooleanField(default=True)
 
-    def is_busy(self, dest: int) -> bool:
+    def available(self, dest: int, move_status=0) -> bool:
         if self.movement_status == ELEVATOR_STOPPED:
-            return False
+            return True
         elif self.current_floor < dest and self.movement_status == ELEVATOR_MOVE_UP:
-            return False
+            return True
         elif self.current_floor > dest and self.movement_status == ELEVATOR_MOVE_DOWN:
-            return False
-        return True
+            return True
+        return False
 
 
 class ElevatorLog(models.Model):

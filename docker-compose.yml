@@ -10,7 +10,10 @@ services:
       - POSTGRES_PASSWORD=postgres
   main:
     build: .
-    command: python3 manage.py runserver 0.0.0.0:8080
+    command:
+      - /bin/sh
+      - '-c'
+      - '/myapps/entrypoint.sh'
     volumes:
       - .:/myapp
     ports:
