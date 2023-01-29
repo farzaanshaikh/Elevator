@@ -33,6 +33,7 @@ ALLOWED_HOSTS = ['localhost', '0.0.0.0']
 # Application definition
 
 INSTALLED_APPS = [
+    'elevator_manager.apps.ElevatorManagerConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
