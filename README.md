@@ -14,6 +14,8 @@ Run the following command to start the server.
 ```
 sudo docker compose up
 ```
+Known issue: The first time running `sudo docker compose up` after build might cause an error in the db connection. Try shutting it down with `Ctrl+c`, `sudo docker compose down` and then run `sudo docker compose up` again. This should work for the time being.
+
 ### Uninstall
 After you are done run the following command to uninstall the built containers
 ```
@@ -44,7 +46,7 @@ http://0.0.0.0:8080/elevator/building/
 
 - `GET` Fetch info about a building and it's elevators.
 
-    -`id`: Id of the building.
+    - `id`: Id of the building.
 
 ### Elevators
 Various elevator related operations make use of this api.
